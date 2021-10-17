@@ -1,0 +1,58 @@
+{
+  "name": "unify",
+  "version": "1.0.0",
+  "description": "koa app boilerplate for common use",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/index.ts",
+    "build": "npm run lint && npm run build-ts && npm run copy-static-assets",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "serve": "node .",
+    "start": "npm run serve"
+  },
+  "author": "shuo, Wang",
+  "license": "MIT",
+  "keywords": [
+    "typescript",
+    "koa",
+    "koa2",
+    "jwt",
+    "winston",
+    "boilerplate",
+    "helmet",
+    "cors",
+    "nunjucks"
+  ],
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@koa/router": "^10.1.1",
+    "cron": "^1.8.2",
+    "dotenv": "^10.0.0",
+    "koa": "^2.13.3",
+    "koa-bodyparser": "^4.3.0",
+    "koa-helmet": "^6.1.0",
+    "koa-jwt": "^4.0.3",
+    "koa-swagger-decorator": "^1.7.8",
+    "nunjucks": "^3.2.3",
+    "typescript": "^4.4.4",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "@types/cron": "^1.7.3",
+    "@types/koa": "^2.13.4",
+    "@types/koa-bodyparser": "^4.3.3",
+    "@types/koa-helmet": "^6.0.4",
+    "@types/koa__cors": "^3.0.3",
+    "@types/koa__router": "^8.0.8",
+    "@types/node": "^16.11.0",
+    "@types/shelljs": "^0.8.9",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.1",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-html": "^6.2.0",
+    "nodemon": "^2.0.13",
+    "shelljs": "^0.8.4",
+    "ts-node": "^10.3.0"
+  }
+}
