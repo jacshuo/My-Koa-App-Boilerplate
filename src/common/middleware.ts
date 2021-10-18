@@ -1,11 +1,15 @@
-// 全局中间件
-import {Context, Next, Middleware} from "koa";
-import {logger} from "./logger";
+// 其他全局预加挂定制中间件
+import {Next} from "koa";
+import {UnifyContext, UnifyMiddleware} from "app";
 
-const middlewares: (() => Middleware)[] = [
-  (): (ctx: Context, next: Next) => Promise<void> => {
-    return async (ctx: Context, next: Next): Promise<void> => {
-      logger.info("HELLO, from my middleware!");
+export type CustomizedMiddleware = (...params: any) => UnifyMiddleware
+// 标准或定制（带参数）中间件数组类型
+export type CustomizedMiddlewares = CustomizedMiddleware[]
+
+const middlewares: CustomizedMiddlewares = [
+  (): (ctx: UnifyContext, next: Next) => Promise<void> => {
+    return async (ctx: UnifyContext, next: Next): Promise<void> => {
+      ctx.logger.info("HELLO, from my middleware!");
       try {
         await next();
       } catch (e: any) {

@@ -33,4 +33,5 @@ const config: IConfig = {
   logMaxSize: +(process.env.LOG_MAX_SIZE || 0) || 3,
   logMaxFiles: +(process.env.LOG_MAX_FILES || 0) || 5,
 };
+
 export default config;

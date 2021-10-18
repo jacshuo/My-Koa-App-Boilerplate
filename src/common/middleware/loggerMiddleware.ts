@@ -1,9 +1,10 @@
-import config from "../app/config";
+import {IConfig} from "../../app/config";
 import winston, {format, transports} from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
 import {Context, Middleware, Next} from "koa";
+import {UnifyContext, UnifyMiddleware} from "app";
 
-const createLogger = (): any => {
+const createLogger = (config: IConfig): any => {
   const logger = winston.createLogger({
     level: config.debug ? "debug" : "info",
     format: format.combine(
@@ -40,13 +41,13 @@ const createLogger = (): any => {
   return logger;
 };
 
-export const logger = createLogger();
-
-const loggerMiddleware = (winston: any): Middleware => {
-  return async (ctx: Context, next: Next): Promise<void> => {
+const loggerMiddleware = (winston: any): UnifyMiddleware => {
+  return async (ctx: UnifyContext, next: Next): Promise<void> => {
     const start = new Date().getTime();
-    logger.log("debug",
-        `【请求开始<<<-】【请求方法: ${ctx.method}】【请求URL: ${ctx.originalUrl}】【请求数据: ${ctx.body}】`);
+    // 绑定Logger至Ctx
+    ctx.logger = createLogger(ctx.config);
+    ctx.logger.log("debug",
+        `【请求开始--->>>】【请求方法: ${ctx.method}】【请求URL: ${ctx.originalUrl}】【请求数据: ${ctx.body}】`);
     try {
       await next();
     } catch (err: any) {
@@ -62,8 +63,10 @@ const loggerMiddleware = (winston: any): Middleware => {
     } else {
       logLevel = "info";
     }
-    const msg = `【请求结束->>>】【请求方法: ${ctx.method}】【访问URL: ${ctx.originalUrl}】【响应码: ${ctx.status}】【响应体: ${ctx.body}】【请求耗时: ${ms}ms】`;
-    logger.log(logLevel, msg);
+    const msg = `【请求结束<<<---】【请求方法: ${ctx.method}】
+    【访问URL: ${ctx.originalUrl}】【响应码: ${ctx.status}】
+    【响应体: ${ctx.body}】【请求耗时: ${ms}ms】`;
+    ctx.logger.log(logLevel, msg);
   };
 };
 
