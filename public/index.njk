@@ -5,10 +5,28 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="Unify"
+          content="Unify SPA-MFE">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="apple-touch-icon" href="/logo192.png" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="/manifest.json" />
     <title>{{ docTitle }}</title>
 </head>
 <body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+    -->
+{% if react %}
+    <div id="root"></div>
+    {% elif vue %}
+    <div id="app"></div>
+{% endif %}
 {% for script in scripts %}
     <script defer src="{{ script.src }}"></script>
 {% endfor %}

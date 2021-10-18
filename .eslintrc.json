@@ -26,6 +26,9 @@
       "error",
       "double"
     ],
+    "max-len": [
+      "warn"
+    ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": 1,
     "@typescript-eslint/no-inferrable-types": [

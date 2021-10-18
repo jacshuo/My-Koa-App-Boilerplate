@@ -19,3 +19,4 @@ dist/**/*
 # Logging files
 *.log
 *.pyc
+log/
