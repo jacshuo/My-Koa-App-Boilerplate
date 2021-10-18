@@ -47,7 +47,8 @@ const loggerMiddleware = (winston: any): UnifyMiddleware => {
     // 绑定Logger至Ctx
     ctx.logger = createLogger(ctx.config);
     ctx.logger.log("debug",
-        `【请求开始--->>>】【请求方法: ${ctx.method}】【请求URL: ${ctx.originalUrl}】【请求数据: ${ctx.body}】`);
+        `【请求开始--->>>】【请求方法: ${ctx.method}】【请求URL: ${ctx.originalUrl}】
+        【请求数据: ${ctx.body}】`);
     try {
       await next();
     } catch (err: any) {
@@ -63,9 +64,9 @@ const loggerMiddleware = (winston: any): UnifyMiddleware => {
     } else {
       logLevel = "info";
     }
-    const msg = `【请求结束<<<---】【请求方法: ${ctx.method}】
-    【访问URL: ${ctx.originalUrl}】【响应码: ${ctx.status}】
-    【响应体: ${ctx.body}】【请求耗时: ${ms}ms】`;
+    const msg = `【请求结束<<<---】【请求方法: ${ctx.method}】【访问URL: ${ctx.originalUrl}】【响应码: ${ctx.status}】
+    【响应体: ${ctx.body.toString()}】
+    【请求耗时: ${ms}ms】`;
     ctx.logger.log(logLevel, msg);
   };
 };
