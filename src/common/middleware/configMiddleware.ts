@@ -1,4 +1,4 @@
-import {UnifyContext, UnifyMiddleware} from "app";
+import {UnifyContext} from "app";
 import {Next} from "koa";
 import {CustomizedMiddleware} from "common/middleware";
 import {IConfig} from "app/config";

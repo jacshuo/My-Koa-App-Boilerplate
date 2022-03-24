@@ -1,9 +1,9 @@
-import Router from "koa-router";
+import Router from "@koa/router";
 import * as controllers from "../controller";
-import {DefaultState} from "koa";
+import {DefaultContext, DefaultState} from "koa";
 import {UnifyContext} from "app";
 
-const router = new Router<DefaultState, UnifyContext>();
+const router = new Router<DefaultState, UnifyContext | DefaultContext>();
 
 router.get("/", controllers.IndexController);
 

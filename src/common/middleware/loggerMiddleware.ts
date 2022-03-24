@@ -1,19 +1,19 @@
-import {IConfig} from "../../app/config";
+import {UnifyContext, UnifyMiddleware} from "app";
+import {Next} from "koa";
 import winston, {format, transports} from "winston";
 import DailyRotateFile from "winston-daily-rotate-file";
-import {Context, Middleware, Next} from "koa";
-import {UnifyContext, UnifyMiddleware} from "app";
+import {IConfig} from "app/config";
 
 const createLogger = (config: IConfig): any => {
-  const logger = winston.createLogger({
-    level: config.debug ? "debug" : "info",
+  return winston.createLogger({
+    level: config.debug ? "debug":"info",
     format: format.combine(
         format.label({label: "FILE-LOG"}),
         format.timestamp({
           format: "YYYY-MM-DD HH:mm:ss.SSS",
         }),
         format.printf(({level, message, label, timestamp}) => {
-          return `${timestamp} [${label}] ${level}: ${message}`;
+          return `${ timestamp } [${ label }] ${ level }: ${ message }`;
         }),
     ),
     transports: [
@@ -32,23 +32,22 @@ const createLogger = (config: IConfig): any => {
             format.timestamp(),
             format.colorize(),
             format.printf(({level, message, label, timestamp}) => {
-              return `${timestamp} [${label}] ${level}: ${message}`;
+              return `${ timestamp } [${ label }] ${ level }: ${ message }`;
             }),
         ),
       }),
     ],
   });
-  return logger;
 };
 
-const loggerMiddleware = (winston: any): UnifyMiddleware => {
+const loggerMiddleware = (): UnifyMiddleware => {
   return async (ctx: UnifyContext, next: Next): Promise<void> => {
     const start = new Date().getTime();
+    console.log(ctx);
     // 绑定Logger至Ctx
     ctx.logger = createLogger(ctx.config);
     ctx.logger.log("debug",
-        `【请求开始--->>>】【请求方法: ${ctx.method}】【请求URL: ${ctx.originalUrl}】
-        【请求数据: ${ctx.body}】`);
+        `REQUEST:${ ctx }:[${ ctx.method }]:${ ctx.originalUrl }`);
     try {
       await next();
     } catch (err: any) {
@@ -64,9 +63,7 @@ const loggerMiddleware = (winston: any): UnifyMiddleware => {
     } else {
       logLevel = "info";
     }
-    const msg = `【请求结束<<<---】【请求方法: ${ctx.method}】【访问URL: ${ctx.originalUrl}】【响应码: ${ctx.status}】
-    【响应体: ${ctx.body.toString()}】
-    【请求耗时: ${ms}ms】`;
+    const msg = `RESPONSE:${ ctx.status } in ${ ms }ms`;
     ctx.logger.log(logLevel, msg);
   };
 };

@@ -1,5 +1,5 @@
 import {Next} from "koa";
-import {UnifyContext, UnifyMiddleware} from "app";
+import {UnifyContext} from "app";
 
 export const IndexController = async (ctx: UnifyContext, next: Next) => {
   ctx.logger.info("this is my ctx logger from controller!");

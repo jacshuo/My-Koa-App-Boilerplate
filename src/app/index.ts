@@ -1,12 +1,16 @@
 import Koa, {DefaultContext, DefaultState, Middleware} from "koa";
 import bodyParser from "koa-bodyparser";
 import logger from "../common/middleware/loggerMiddleware";
-import winston, {Logger} from "winston";
+import {Logger} from "winston";
 import cors from "@koa/cors";
 import middlewares from "../common/middleware";
 import router from "../router";
 import config, {IConfig} from "./config";
 import configMiddleware from "../common/middleware/configMiddleware";
+import KeyGrip from "keygrip";
+import session from "koa-session";
+// 静态资源Serve
+// import serve from "koa-static";
 
 // 扩展DefaultContext接口
 export interface UnifyContext extends DefaultContext {
@@ -20,14 +24,20 @@ export interface UnifyContext extends DefaultContext {
 export type UnifyMiddleware = Middleware<DefaultState, UnifyContext>
 
 // 创建新的Koa实例
-const app = new Koa<DefaultState, UnifyContext>({});
+const app = new Koa<DefaultState, UnifyContext | DefaultContext>({});
+app.keys = new KeyGrip(["I love home"], "sha256");
 
 // 挂载全局框架中间件（配置、跨域、日志、bodyparser等）
 app.use(configMiddleware(config));
-app.use(cors());
+app.use(cors({credentials: true, origin: "*"}));
 app.use(bodyParser());
-app.use(logger(winston));
-// 挂载全局自定义中间件（自定义日志、session、jwt等）
+app.use(logger());
+app.use(session({
+  key: "acme.sess",
+  maxAge: 3600000, // 1 hour life of cookie (ms)
+  secure: false,
+  signed: true,
+}, app));
 middlewares.map((middleware) => {
   app.use(middleware());
 });
