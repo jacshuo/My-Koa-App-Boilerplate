@@ -1,20 +1,20 @@
-import {UnifyContext, UnifyMiddleware} from "app";
-import {Next} from "koa";
-import winston, {format, transports} from "winston";
-import DailyRotateFile from "winston-daily-rotate-file";
-import {IConfig} from "app/config";
+import { UnifyContext, UnifyMiddleware } from 'app';
+import { Next } from 'koa';
+import winston, { format, transports } from 'winston';
+import DailyRotateFile from 'winston-daily-rotate-file';
+import { IConfig } from 'app/config';
 
-const createLogger = (config: IConfig): any => {
-  return winston.createLogger({
-    level: config.debug ? "debug":"info",
+const createLogger = (config: IConfig): any =>
+  winston.createLogger({
+    level: config.debug ? 'debug' : 'info',
     format: format.combine(
-        format.label({label: "FILE-LOG"}),
-        format.timestamp({
-          format: "YYYY-MM-DD HH:mm:ss.SSS",
-        }),
-        format.printf(({level, message, label, timestamp}) => {
-          return `${ timestamp } [${ label }] ${ level }: ${ message }`;
-        }),
+      format.label({ label: 'FILE-LOG' }),
+      format.timestamp({
+        format: 'YYYY-MM-DD HH:mm:ss.SSS',
+      }),
+      format.printf(
+        ({ level, message, label, timestamp }) => `${timestamp} [${label}] ${level}: ${message}`,
+      ),
     ),
     transports: [
       new DailyRotateFile({
@@ -23,31 +23,31 @@ const createLogger = (config: IConfig): any => {
         filename: config.logFileName,
         zippedArchive: config.logZipArchive,
         dirname: config.logFileDir,
-        maxSize: config.logMaxSize + "m",
+        maxSize: `${config.logMaxSize}m`,
         maxFiles: config.logMaxFiles,
       }),
       new transports.Console({
         format: format.combine(
-            format.label({label: "CONSOLE-LOG"}),
-            format.timestamp(),
-            format.colorize(),
-            format.printf(({level, message, label, timestamp}) => {
-              return `${ timestamp } [${ label }] ${ level }: ${ message }`;
-            }),
+          format.label({ label: 'CONSOLE-LOG' }),
+          format.timestamp(),
+          format.colorize(),
+          format.printf(
+            ({ level, message, label, timestamp }) =>
+              `${timestamp} [${label}] ${level}: ${message}`,
+          ),
         ),
       }),
     ],
   });
-};
 
-const loggerMiddleware = (): UnifyMiddleware => {
-  return async (ctx: UnifyContext, next: Next): Promise<void> => {
+const loggerMiddleware =
+  (): UnifyMiddleware =>
+  async (ctx: UnifyContext, next: Next): Promise<void> => {
     const start = new Date().getTime();
     console.log(ctx);
     // 绑定Logger至Ctx
     ctx.logger = createLogger(ctx.config);
-    ctx.logger.log("debug",
-        `REQUEST:${ ctx }:[${ ctx.method }]:${ ctx.originalUrl }`);
+    ctx.logger.log('debug', `REQUEST:${ctx}:[${ctx.method}]:${ctx.originalUrl}`);
     try {
       await next();
     } catch (err: any) {
@@ -57,15 +57,14 @@ const loggerMiddleware = (): UnifyMiddleware => {
     const ms = new Date().getTime() - start;
     let logLevel: string;
     if (ctx.status >= 500) {
-      logLevel = "error";
+      logLevel = 'error';
     } else if (ctx.status >= 400) {
-      logLevel = "warn";
+      logLevel = 'warn';
     } else {
-      logLevel = "info";
+      logLevel = 'info';
     }
-    const msg = `RESPONSE:${ ctx.status } in ${ ms }ms`;
+    const msg = `RESPONSE:${ctx.status} in ${ms}ms`;
     ctx.logger.log(logLevel, msg);
   };
-};
 
 export default loggerMiddleware;

@@ -14,4 +14,4 @@ export interface IConfig {
 }
 declare const config: IConfig;
 export default config;
-//# sourceMappingURL=index.d.ts.map
+// # sourceMappingURL=index.d.ts.map

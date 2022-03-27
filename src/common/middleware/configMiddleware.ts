@@ -1,11 +1,11 @@
-import {UnifyContext} from "app";
-import {Next} from "koa";
-import {CustomizedMiddleware} from "common/middleware";
-import {IConfig} from "app/config";
+import { UnifyContext } from 'app';
+import { Next } from 'koa';
+import { CustomizedMiddleware } from 'common/middleware';
+import { IConfig } from 'app/config';
 
-const configMiddleware: CustomizedMiddleware = (config: IConfig): (
-  ctx: UnifyContext, next: Next) => Promise<void> => {
-  return async (ctx: UnifyContext, next: Next) => {
+const configMiddleware: CustomizedMiddleware =
+  (config: IConfig): ((ctx: UnifyContext, next: Next) => Promise<void>) =>
+  async (ctx: UnifyContext, next: Next) => {
     ctx.config = config;
     try {
       await next();
@@ -14,6 +14,5 @@ const configMiddleware: CustomizedMiddleware = (config: IConfig): (
       ctx.body = e.message;
     }
   };
-};
 
 export default configMiddleware;
