@@ -4,7 +4,7 @@
   "description": "koa app boilerplate for common use",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node src/index.ts",
+    "dev": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node -r tsconfig-paths/register src/index.ts",
     "build": "tsc",
     "serve": "node .",
     "start": "npm run serve"
@@ -80,6 +80,7 @@
     "prettier": "^2.5.1",
     "prettier-plugin-jsdoc": "^0.3.0",
     "shelljs": "^0.8.4",
-    "ts-node": "^10.3.0"
+    "ts-node": "^10.3.0",
+    "tsconfig-paths": "^3.14.1"
   }
 }
