@@ -14,29 +14,30 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "sourceMap": false,
+    "sourceMap": true,
+    "jsx": "react-jsx",
     "removeComments": true,
     "declaration": false,
     "declarationMap": false,
     "emitDeclarationOnly": false,
-    "baseUrl": ".",
+    "rootDir": "./src",
+    "baseUrl": "./",
     "paths": {
       "*": [
         "node_modules/*",
-        "*",
-        "src/*"
-      ],
-      "@/*": [
         "src/*"
       ]
     }
   },
+  "include": [
+    "src/**/*.ts"
+  ],
   "exclude": [
     "node_modules",
     "dist"
