@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
-    "serve": "node .",
-    "start": "npm run serve"
+    "serve": "node ."
   },
   "nodemonConfig": {
     "ignore": [
@@ -19,7 +18,7 @@
     "watch": [
       "src"
     ],
-    "exec": "ts-node -r tsconfig-paths/register src/index.ts",
+    "exec": "node --inspect=0.0.0.0:9229 --require ts-node/register -r tsconfig-paths/register src/index.ts",
     "ext": "ts,js"
   },
   "author": "shuo, Wang",
