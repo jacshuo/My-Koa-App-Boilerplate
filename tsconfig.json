@@ -26,11 +26,10 @@
     "declaration": false,
     "declarationMap": false,
     "emitDeclarationOnly": false,
-    "rootDir": "./src",
-    "baseUrl": "./",
+    "rootDir": ".",
+    "baseUrl": ".",
     "paths": {
       "*": [
-        "node_modules/*",
         "src/*"
       ]
     }
