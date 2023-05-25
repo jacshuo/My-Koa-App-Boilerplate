@@ -1,5 +1,5 @@
 // 其他全局预加挂定制中间件
-import { UnifyMiddleware } from 'app';
+import { UnifyMiddleware } from '@src/app';
 
 export type CustomizedMiddleware = (...params: any) => UnifyMiddleware;
 // 标准或定制（带参数）中间件数组类型

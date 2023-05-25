@@ -18,10 +18,16 @@ module.exports = {
   settings: {
     polyfills: ['Promise', 'URL'],
     'import/resolver': {
+      typescript: {
+        project: './tsconfig.json',
+      },
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        moduleDirectory: ['node_modules', 'src/'],
+        moduleDirectory: ['node_modules', 'src'],
       },
+    },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
   },
   parser: '@typescript-eslint/parser',

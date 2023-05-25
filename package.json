@@ -4,10 +4,23 @@
   "description": "koa app boilerplate for common use",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --ignore tests/ --watch src -e ts,tsx --exec ts-node -r tsconfig-paths/register src/index.ts",
-    "build": "tsc",
+    "dev": "nodemon",
+    "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "serve": "node .",
     "start": "npm run serve"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+      "src"
+    ],
+    "exec": "ts-node -r tsconfig-paths/register src/index.ts",
+    "ext": "ts,js"
   },
   "author": "shuo, Wang",
   "license": "MIT",
@@ -61,10 +74,11 @@
     "eslint": "^8.5.0",
     "eslint-config-airbnb": "^19.0.0",
     "eslint-config-prettier": "^8.0.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-compat": "^4.0.0",
     "eslint-plugin-html": "^6.2.0",
-    "eslint-plugin-import": "^2.21.1",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jest": "^26.0.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-markdown": "^2.0.0",
@@ -81,6 +95,7 @@
     "prettier-plugin-jsdoc": "^0.3.0",
     "shelljs": "^0.8.4",
     "ts-node": "^10.3.0",
+    "tsc-alias": "^1.8.6",
     "tsconfig-paths": "^3.14.1"
   }
 }

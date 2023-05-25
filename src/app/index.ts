@@ -4,8 +4,8 @@ import winston, { format, Logger, transports } from 'winston';
 import cors from '@koa/cors';
 import KeyGrip from 'keygrip';
 import session from 'koa-session';
-import middlewares from 'common/middleware';
-import router from 'router';
+import middlewares from '@common/middleware';
+import router from '@src/router';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import config, { IConfig } from './config';
 // 静态资源Serve

@@ -26,16 +26,37 @@
     "declaration": false,
     "declarationMap": false,
     "emitDeclarationOnly": false,
-    "rootDir": ".",
     "baseUrl": ".",
+    "rootDir": ".",
     "paths": {
-      "*": [
+      "@src/*": [
         "src/*"
+      ],
+      "@app/*": [
+        "src/app/*"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ],
+      "@controller/*": [
+        "src/controller/*"
+      ],
+      "@model/*": [
+        "src/model/*"
+      ],
+      "@router/*": [
+        "src/router/*"
+      ],
+      "@service/*": [
+        "src/service/*"
+      ],
+      "@view/*": [
+        "src/view/*"
       ]
     }
   },
   "include": [
-    "src/**/*.ts"
+    "src"
   ],
   "exclude": [
     "node_modules",

@@ -1,5 +1,5 @@
 // 全局助手函数
-import { UnifyContext } from 'app';
+import { UnifyContext } from "@src/app";
 
 export interface responseFormat {
   code: 0 | -1;

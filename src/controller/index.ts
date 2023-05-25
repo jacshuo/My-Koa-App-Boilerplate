@@ -1,5 +1,5 @@
 import { Next } from 'koa';
-import { UnifyContext } from 'app';
+import { UnifyContext } from '@src/app';
 
 // eslint-disable-next-line import/prefer-default-export
 export const IndexController = async (ctx: UnifyContext, next: Next) => {
